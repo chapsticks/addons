@@ -7,6 +7,7 @@
     'version': '1.0',
     'category': 'base',
     'depends': [],
+    "images": ['static/img/db_constraint_ture.png', 'static/img/db_constraint_false.png'],
     'data': [
     ],
     'assets': {
