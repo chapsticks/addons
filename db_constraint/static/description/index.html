@@ -1,0 +1,48 @@
+<html>
+<body>
+<h1>Postgresql数据库端不建立外键关系，odoo ORM保留外键关系</h1>
+
+<p>组件使用方式，在外键字段上设置属性db_constraint=False，将会在数据库层将外键关系解除，保留orm层的外键关系</p>
+
+<p><code></code>`python</p>
+
+<p>class Author(models.Model):
+    <em>name = &#39;xcj.author&#39;
+    name = fields.Char(string=&quot;姓名&quot;)
+    book</em>ids = fields.One2many(&quot;xcj.book&quot;, &quot;author_id&quot;, string=&quot;作品&quot;)</p>
+
+<p>class Book(models.Model):
+    <em>name = &#39;xcj.book&#39;
+    name = fields.Char(string=&quot;数目&quot;)
+    code = fields.Char(string=&quot;编号&quot;)
+    author</em>id = fields.Many2one(&quot;xcj.author&quot;, string=&quot;作者&quot;, db<em>constraint=False)
+    author</em>ids = fields.Many2many(&quot;xcj.author&quot;, &quot;xcj<em>book</em>authors&quot;, &quot;book<em>id&quot;, &quot;author</em>id&quot;, string=&quot;作者&quot;, db_constraint=False)</p>
+
+<p><code></code>`</p>
+
+<h3>设置为True或者不配置db_constraint</h3>
+
+<p><code></code>`python</p>
+
+<pre><code>author_id = fields.Many2one(&quot;xcj.author&quot;, string=&quot;作者&quot;)
+author_ids = fields.Many2many(&quot;xcj.author&quot;, &quot;xcj_book_authors&quot;, &quot;book_id&quot;, &quot;author_id&quot;, string=&quot;作者&quot;)</code></pre>
+
+<h1>或</h1>
+
+<pre><code>author_id = fields.Many2one(&quot;xcj.author&quot;, string=&quot;作者&quot;, db_constraint=True)
+author_ids = fields.Many2many(&quot;xcj.author&quot;, &quot;xcj_book_authors&quot;, &quot;book_id&quot;, &quot;author_id&quot;, string=&quot;作者&quot;, db_constraint=True)</code></pre>
+
+<p><code></code>`
+<img alt="db_constraint_true.png" src="./static/img/db_constraint_true.png"/></p>
+
+<h3>设置为False（将不会建立数据库层面的外键关系）</h3>
+
+<p><code></code>`python</p>
+
+<pre><code>author_id = fields.Many2one(&quot;xcj.author&quot;, string=&quot;作者&quot;, db_constraint=False)
+author_ids = fields.Many2many(&quot;xcj.author&quot;, &quot;xcj_book_authors&quot;, &quot;book_id&quot;, &quot;author_id&quot;, string=&quot;作者&quot;, db_constraint=False)</code></pre>
+
+<p><code></code>`
+<img alt="db_constraint_false.png" src="./static/img/db_constraint_false.png"/></p>
+</body>
+</html>
